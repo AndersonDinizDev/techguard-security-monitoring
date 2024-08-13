@@ -30,10 +30,6 @@ Este projeto é uma aplicação básica em Python para monitoramento de seguran�
 
 A aplicação monitora o arquivo de log especificado e envia um alerta por e-mail se o número de eventos suspeitos detectados atingir o limite configurado. O monitoramento é realizado a cada 60 segundos.
 
-## Contribuições
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
-
 ## Licença
 
 Este projeto é licenciado sob a MIT License.
