@@ -15,7 +15,11 @@ Este projeto é uma aplicação básica em Python para monitoramento de seguran�
 1. Certifique-se de ter o Python instalado em sua máquina.
 2. Clone este repositório.
 3. Edite o arquivo `config/config.yaml` com as configurações desejadas.
-4. Execute o script `app.py`:
+4. Instale as dependências necessárias:
+   ```bash
+   pip install pyyaml
+   ```
+5. Execute o script `app.py`:
    ```bash
    python app.py
    ```
