@@ -7,7 +7,6 @@ def monitor_log(log_file, threshold, recipients):
         with open(log_file, 'r') as file:
             log_data = file.read()
 
-        # Exemplo simples de detecção de padrões suspeitos
         pattern = re.compile(r"ERRO|FALHA|INVASÃO")
         matches = pattern.findall(log_data)
 
