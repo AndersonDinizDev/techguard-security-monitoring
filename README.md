@@ -1,37 +1,39 @@
-# TechGuard Security Monitoring
+# TechGuard Security Solutions - Ferramenta de Monitoramento de Segurança
 
-## Visão Geral
+Este projeto é uma aplicação básica em Python para monitoramento de segurança, desenvolvida para a empresa TechGuard Security Solutions.
 
-Este projeto tem como objetivo monitorar logs de sistemas para detectar atividades suspeitas em tempo real e alertar a equipe de TI.
+## Estrutura do Projeto
 
-## Estrutura
+- `app.py`: Script principal que inicia o monitoramento.
+- `config/config.yaml`: Arquivo de configuração com parâmetros para o monitoramento.
+- `monitor/monitor.py`: Lógica de monitoramento e envio de alertas.
+- `config_loader.py`: Script para carregar a configuração YAML.
+- `logs/system.log`: Arquivo de log monitorado pela aplicação.
 
-- **config/**: Contém as configurações do sistema.
-- **src/**: Contém o código-fonte principal.
-- **tests/**: Contém os testes unitários para o código-fonte.
-- **logs/**: Diretório onde os logs do monitoramento são armazenados.
+## Como Executar
 
-## Configuração
-
-1. Clone o repositório:
-
+1. Certifique-se de ter o Python instalado em sua máquina.
+2. Clone este repositório.
+3. Edite o arquivo `config/config.yaml` com as configurações desejadas.
+4. Execute o script `app.py`:
    ```bash
-   git clone https://github.com/username/techguard-security-monitoring.git
-   cd techguard-security-monitoring
+   python app.py
    ```
 
-2. Instale as dependências:
+## Requisitos
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+- Python 3.7+
+- Bibliotecas: `PyYAML`, `smtplib`
+- Acesso à internet para envio de e-mails de alerta.
 
-3. Configure o arquivo `config.yaml` com as informações necessárias para a empresa.
+## Funcionamento
 
-## Execução
+A aplicação monitora o arquivo de log especificado e envia um alerta por e-mail se o número de eventos suspeitos detectados atingir o limite configurado. O monitoramento é realizado a cada 60 segundos.
 
-Execute o script principal:
+## Contribuições
 
-```bash
-python src/monitor.py
-```
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+
+## Licença
+
+Este projeto é licenciado sob a MIT License.

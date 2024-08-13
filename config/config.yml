@@ -1,0 +1,10 @@
+log_file_path: "logs/system.log"
+alert_threshold: 5
+email_recipients:
+  - "lucas.almeida@techguard.com"
+  - "fernanda.santos@techguard.com"
+  - "anderson.diniz@techguard.com"
+smtp_server: "smtp.techguard.com"
+smtp_port: 587
+smtp_username: "alerta@techguard.com"
+smtp_password: "senha_super_secreta"

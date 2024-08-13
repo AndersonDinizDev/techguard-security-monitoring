@@ -1,40 +1,36 @@
-import yaml
-import logging.config
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-from alert import send_alert
+import re
+import smtplib
+from email.mime.text import MIMEText
 
-logging.config.fileConfig('config/logging.conf')
-logger = logging.getLogger(__name__)
-
-with open('config/config.yaml', 'r') as file:
-    config = yaml.safe_load(file)
-
-class LogMonitorHandler(FileSystemEventHandler):
-    def __init__(self, alert_threshold):
-        self.suspect_count = 0
-        self.alert_threshold = alert_threshold
-
-    def on_modified(self, event):
-        with open(config['log_file_path'], 'r') as file:
-            lines = file.readlines()
-            last_line = lines[-1]
-            if "SUSPICIOUS" in last_line:
-                self.suspect_count += 1
-                logger.warning(f"Atividade suspeita detectada: {last_line.strip()}")
-                if self.suspect_count >= self.alert_threshold:
-                    send_alert(self.suspect_count)
-                    self.suspect_count = 0
-
-if __name__ == "__main__":
-    event_handler = LogMonitorHandler(alert_threshold=config['alert_threshold'])
-    observer = Observer()
-    observer.schedule(event_handler, path=config['log_file_path'], recursive=False)
-    observer.start()
-    logger.info("Monitoramento de logs iniciado.")
+def monitor_log(log_file, threshold, recipients):
     try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+        with open(log_file, 'r') as file:
+            log_data = file.read()
+
+        # Exemplo simples de detecção de padrões suspeitos
+        pattern = re.compile(r"ERRO|FALHA|INVASÃO")
+        matches = pattern.findall(log_data)
+
+        if len(matches) >= threshold:
+            send_alert(recipients, len(matches))
+
+    except FileNotFoundError:
+        print(f"Arquivo de log {log_file} não encontrado.")
+    except Exception as e:
+        print(f"Ocorreu um erro durante o monitoramento: {e}")
+
+def send_alert(recipients, count):
+    message = MIMEText(f"Foram detectados {count} eventos suspeitos no sistema.")
+    message['Subject'] = 'Alerta de Segurança'
+    message['From'] = 'alerta@techguard.com'
+    message['To'] = ', '.join(recipients)
+
+    try:
+        server = smtplib.SMTP('smtp.techguard.com', 587)
+        server.starttls()
+        server.login('alerta@techguard.com', 'senha_super_secreta')
+        server.sendmail('alerta@techguard.com', recipients, message.as_string())
+        server.quit()
+        print("Alerta enviado com sucesso.")
+    except Exception as e:
+        print(f"Falha ao enviar alerta: {e}")
