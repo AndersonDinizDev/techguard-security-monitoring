@@ -1,12 +1,12 @@
 import time
-from monitor.monitor import monitor_log
+from src.monitor import monitor_log
 from config_loader import load_config
 
 def main():
-    config = load_config("config/config.yaml")
-    log_file = config['log_file_path']
-    threshold = config['alert_threshold']
-    recipients = config['email_recipients']
+    config = load_config("config/config.yml")
+    log_file = config.get('log_file_path', 'logs/system.log')
+    threshold = config.get('alert_threshold', 5)
+    recipients = config.get('email_recipients', [])
 
     print("Monitoramento iniciado...")
     while True:
